@@ -42,7 +42,7 @@ public class PanelPrincipal extends javax.swing.JPanel {
         btnProbar.setText("Probar Piscina");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
