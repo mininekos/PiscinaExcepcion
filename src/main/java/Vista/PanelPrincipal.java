@@ -4,7 +4,10 @@
  */
 package Vista;
 
+import Excepcion.SalidaDelRango;
+import Modelo.Piscina;
 import java.util.Random;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,19 +16,23 @@ import javax.swing.JOptionPane;
  */
 public class PanelPrincipal extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelPrincipal
-     */
-    public PanelPrincipal() {
+    private Piscina piscina=null;
+    private VentanaPrincipal vista;
+    Random rnd = new Random();
+    
+    public PanelPrincipal(VentanaPrincipal vista) {
         initComponents();
+        this.vista=vista;
         jS.setMinimum(0); //Valor Mínimo
-        //jS.setMaximum(litrosPiscina); //Valor Máximo
+        jS.setMaximum(3000); //Valor Máximo
         jS.setMajorTickSpacing(100); //Definir marcas mayores cada 100 unidades
         jS.setMinorTickSpacing(10); //Definir marcas menores cada 10 unidades
         jS.setValue(0); //Asignación del valor inicial
         jS.setPaintTicks(true); //Mostrar marcas mayores y menores
         jS.setPaintLabels(true); //Mostrar numeración de marcas mayores
         jS.setEnabled(false); //desactivar jSlider
+        btnLlenar.setEnabled(false);
+        btnVaciar.setEnabled(false);
     }
 
     /**
@@ -66,7 +73,6 @@ public class PanelPrincipal extends javax.swing.JPanel {
         jScrollPane2.setViewportView(txtPrincipal);
 
         btnLlenar.setBackground(new java.awt.Color(51, 255, 51));
-        btnLlenar.setForeground(new java.awt.Color(0, 0, 0));
         btnLlenar.setText("Llenar");
         btnLlenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,7 +81,6 @@ public class PanelPrincipal extends javax.swing.JPanel {
         });
 
         btnVaciar.setBackground(new java.awt.Color(255, 51, 51));
-        btnVaciar.setForeground(new java.awt.Color(0, 0, 0));
         btnVaciar.setText("Vaciar");
         btnVaciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,28 +97,29 @@ public class PanelPrincipal extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(btnLlenar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVaciar)
-                .addGap(26, 26, 26))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(btnProbar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(16, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnLlenar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVaciar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(121, 121, 121)
+                                .addComponent(btnProbar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(16, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(120, 120, 120))
         );
         layout.setVerticalGroup(
@@ -127,10 +133,13 @@ public class PanelPrincipal extends javax.swing.JPanel {
                         .addGap(36, 36, 36)
                         .addComponent(btnProbar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLlenar)
-                    .addComponent(btnVaciar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btnLlenar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVaciar)))
                 .addGap(8, 8, 8)
                 .addComponent(jS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -140,27 +149,45 @@ public class PanelPrincipal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLlenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLlenarActionPerformed
-        
-        Random rnd = new Random();
         int litros = rnd.nextInt(1,1001);
+        jS.setValue(litros);
+        try{
+            piscina.llenar(litros);
+            txtPrincipal.setText(txtPrincipal.getText()+"Capacidad "+piscina.MAX_NIVEL+"L Cantidad a llenar: "+litros+"L Nivel actual "+piscina.getNivel()+"L\n");
+        }
+        catch (SalidaDelRango e){
+            txtPrincipal.setText(txtPrincipal.getText()+"Cantidad a llenar"+litros+"L. "+e.getMessage()+"\n");
+        }
         
         
     }//GEN-LAST:event_btnLlenarActionPerformed
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
-        
-        Random rnd = new Random();
         int litros = rnd.nextInt(1,1001);
-        
-        
-        
+        jS.setValue(litros);
+        try{
+            piscina.vaciar(litros);
+            txtPrincipal.setText(txtPrincipal.getText()+"Capacidad "+piscina.MAX_NIVEL+"L Cantidad a vaciar: "+litros+"L Nivel actual "+piscina.getNivel()+"L\n");
+        }
+        catch (SalidaDelRango e){
+            txtPrincipal.setText(txtPrincipal.getText()+"Cantidad a vaciar"+litros+"L. "+e.getMessage()+ "\n");
+        }
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void btnProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProbarActionPerformed
-       if(JLPiscinas.getSelectedIndex()==-1){
+        int ind =JLPiscinas.getSelectedIndex();
+        if(ind==-1){
            JOptionPane.showMessageDialog(null, "No ha seleccionado piscina");
        }
        else{
+            btnLlenar.setEnabled(true);
+            btnVaciar.setEnabled(true);
+            Double nivelDouble = Double.parseDouble(JLPiscinas.getSelectedValue())*1000;
+            int nivel = (int) Math.round(nivelDouble);
+            piscina= new Piscina(nivel);
+            
+            txtPrincipal.setText(txtPrincipal.getText()+"Piscina de "+piscina.MAX_NIVEL+"\n");
+           
        }
         
     }//GEN-LAST:event_btnProbarActionPerformed

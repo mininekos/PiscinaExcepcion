@@ -4,18 +4,30 @@
  */
 package Vista;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author Dam
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaPrincipal
-     */
+    
+    private PanelPrincipal panelPiscina;
     public VentanaPrincipal() {
+        
         initComponents();
+        panelPiscina=new PanelPrincipal(this);
+        this.getContentPane().add(panelPiscina);
+        panelPiscina.setSize(this.getSize());
+        panelPiscina.setVisible(true);
+        panelPiscina.updateUI();
+        
     }
+    
+    
+   
+
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -25,8 +25,8 @@ public class Piscina {
     public void vaciar(int cantidad) throws SalidaDelRango{
        
             int temporal = nivel - cantidad;
-            if (temporal<0 || cantidad<MAX_NIVEL)
-                throw new SalidaDelRango("Error desvordamiento");
+            if (temporal<0)
+                throw new SalidaDelRango("Error no hay sufiente agua");
             else{
                 nivel = temporal;
             }
@@ -37,7 +37,7 @@ public class Piscina {
        
             int temporal = nivel + cantidad;
             if (temporal>MAX_NIVEL)
-                throw new SalidaDelRango("Error no hay sufiente agua");
+                throw new SalidaDelRango("Error desvordamiento");
             else{
                 nivel = temporal;
             }
