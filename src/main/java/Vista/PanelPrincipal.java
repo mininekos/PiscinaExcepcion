@@ -24,7 +24,7 @@ public class PanelPrincipal extends javax.swing.JPanel {
         initComponents();
         this.vista=vista;
         jS.setMinimum(0); //Valor Mínimo
-        jS.setMaximum(3000); //Valor Máximo
+        jS.setMaximum(2000); //Valor Máximo
         jS.setMajorTickSpacing(100); //Definir marcas mayores cada 100 unidades
         jS.setMinorTickSpacing(10); //Definir marcas menores cada 10 unidades
         jS.setValue(0); //Asignación del valor inicial
@@ -33,6 +33,7 @@ public class PanelPrincipal extends javax.swing.JPanel {
         jS.setEnabled(false); //desactivar jSlider
         btnLlenar.setEnabled(false);
         btnVaciar.setEnabled(false);
+        this.setBounds(0, 0, 695, 600);
     }
 
     /**
@@ -96,12 +97,6 @@ public class PanelPrincipal extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -121,6 +116,12 @@ public class PanelPrincipal extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(120, 120, 120))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

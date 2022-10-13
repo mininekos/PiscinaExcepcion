@@ -19,7 +19,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         panelPiscina=new PanelPrincipal(this);
         this.getContentPane().add(panelPiscina);
-        panelPiscina.setSize(this.getSize());
+        this.setBounds(this.getX(),this.getY(),panelPiscina.getWidth(),panelPiscina.getHeight());
         panelPiscina.setVisible(true);
         panelPiscina.updateUI();
         
